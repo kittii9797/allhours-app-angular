@@ -1,0 +1,128 @@
+<div class="mt-3">
+
+    <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading">
+        <div class="d-flex justify-content-around flex-column flex-md-row">
+            <div class="d-flex justify-content-center mt-2 user-search">
+                <input class="form-control w-100 me-2" type="text" [(ngModel)]="searchString"
+                    placeholder="Search by First or Last name" />
+                <button class="btn btn-dark" (click)="filterUsers()">Search</button>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+                    new Employee</button>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-between flex-wrap mt-5 px-5" *ngIf="filteredUsers.length">
+            <div *ngFor="let user of filteredUsers"
+                class="bg-white rounded shadow shadow-lg d-flex justify-content-center flex-column m-2 p-2 user-card-custom">
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="icon-bg-custom">
+                        <i class="fa fa-user text-secondary fa-3x text-center"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-5 mb-3">
+                    <h5 [title]="user.FirstName != null && user.FirstName.length > 12 ? user.FirstName : ''">
+                        {{user?.FirstName}}
+                    </h5>
+                    <h5 style="padding-left: 8px;"
+                        [title]="user.LastName != null && user.LastName.length > 12 ? user.LastName : ''">
+                        {{user?.LastName}}
+                    </h5>
+                </div>
+                <div class="text-center mx-3 mt-1 mb-3">
+                    <p [title]="user.Email && user.Email.length > 15 ? user.Email : ''" style="font-size:14px">
+                        <i class="fa fa-envelope" style="margin-left: -10px; padding-right: 10px; color:#6c757d"></i>
+                        {{ user?.Email ? (user.Email.length > 30 ? user.Email.substring(0, 30) : user.Email) : '-' }}
+                    </p>
+                    <button class="btn btn-outline-primary w-100 mt-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal2" (click)="absenceUser(user)">
+                        Add Absence
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!filteredUsers.length" class="text-center mt-5">
+            <p>No users found.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Add new Employee -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add new Employee</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input required [(ngModel)]="userRequest.FirstName" class="form-control" type="text"
+                    placeholder="First Name" />
+                <input required [(ngModel)]="userRequest.LastName" class="form-control mt-1" type="text"
+                    placeholder="Last Name" />
+                <input required [(ngModel)]="userRequest.Email" class="form-control mt-1" type="text"
+                    placeholder="Email" />
+                <div class="bg-danger text-white mt-2 rounded text-center" *ngIf="error">
+                    {{errorMessage}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="removeError()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addNewEmployee()">Add New Employee</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add Absence -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add new Absence</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>Absence Definition:</label>
+                <select class="form-control mt-2" [(ngModel)]="absenceRequest.AbsenceDefinition">
+                    <option class="form-control" *ngFor="let absenceDefinition of absenceDefinitions"
+                        [ngValue]="absenceDefinition">
+                        {{absenceDefinition.AbsenceDefinitionName}}
+                    </option>
+                </select>
+                <div class="form-floating">
+                    <textarea [(ngModel)]="absenceRequest.Comment" 
+                            maxlength="500"
+                            class="form-control mt-2" 
+                            placeholder="Leave a description here" 
+                            id="floatingTextarea"
+                            style="height: 100px"></textarea>
+                    <label for="floatingTextarea">Comment</label>
+                </div>
+                <div>
+                    <div class="mt-2">
+                        <label>Date From:</label>
+                        <input [(ngModel)]="absenceRequest.PartialTimeFrom" class="form-control" type="date" placeholder="Date From" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Date Until:</label>
+                        <input [(ngModel)]="absenceRequest.PartialTimeTo" class="form-control" type="date" placeholder="Date To" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close2" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="removeError()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addNewAbsence()">Add New Absence</button>
+            </div>
+        </div>
+    </div>
+</div>
