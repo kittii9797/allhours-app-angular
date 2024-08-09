@@ -22,12 +22,10 @@ The **Allhours REST API Project** is an application designed to interact with th
     git clone https://github.com/yourusername/allhours-app-angular.git
     cd allhours-app-angular
 
-
 2. **Install Dependencies**
 
     ```bash
     npm install
-
 
 3. **Run the Application**
 
