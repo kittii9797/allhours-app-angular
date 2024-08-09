@@ -19,7 +19,7 @@ The **Allhours REST API Project** is an application designed to interact with th
 1. **Clone the project**
 
     ```bash
-    git clone https://github.com/yourusername/allhours-app-angular.git
+    git clone https://github.com/kittii9797/allhours-app-angular.git
     cd allhours-app-angular
 
 2. **Install Dependencies**
