@@ -11,6 +11,8 @@ export class SettingsComponent implements OnInit {
   accessToken: string = '';
   wrongCredentials: boolean = false;
   authentication: boolean = false;
+  clientId: string = '';
+  clientSecret: string = '';
 
   constructor(private appService: AppService, private cdr: ChangeDetectorRef) { }
 
@@ -29,19 +31,30 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  private checkCredentialsAvailability() {
+  public checkCredentialsAvailability() {
     const token = localStorage.getItem(TOKEN);
-    if (token) {
-      this.authentication = true; // Update authentication status if token is valid
-      console.log('true')
+    if (this.clientId && this.clientSecret || token) {
+      this.appService.authenticate(this.clientId, this.clientSecret).subscribe({
+        next: () => {
+          this.authentication = true;
+          this.wrongCredentials = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.wrongCredentials = true;
+          this.authentication = false;
+          this.cdr.detectChanges();
+        }
+      });
     } else {
-      this.authentication = false; // Set to false if token is invalid or not found
-      console.log('false')
+      //this.wrongCredentials = true;
+      this.authentication = false;
+      this.cdr.detectChanges();
     }
   }
   
   public removeToken() {
-    this.appService.removeAccessToken(); // Remove token using the service method
+    this.appService.removeAccessToken();
     this.authentication = false;
     this.accessToken = '';
     this.cdr.detectChanges();

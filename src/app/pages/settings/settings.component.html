@@ -1,16 +1,19 @@
 <div class="container bg-light mt-5 shadow-lg" style="height: 35rem; padding: 0">
-  <div class="d-flex flex-column flex-md-row " style="height: 100%; width: 100%;">
+  <div class="d-flex flex-column flex-md-row" style="height: 100%; width: 100%;">
     <div class="form-container" style="flex: 1;">
       <div class="d-flex flex-column justify-content-center h-100 p-5" *ngIf="!authentication">
         <div class="pt-2">
           <h1 class="text-center text-primary mb-5">Authorization</h1>
           <div class="border-2 border-danger bg-danger rounded" *ngIf="wrongCredentials">
-            <p class="text-white text-center">Please enter a valid access token</p>
+            <p class="text-white text-center">Invalid credentials, cannot generate token.</p>
           </div>
-          <input class="form-control" type="text" [(ngModel)]="accessToken" placeholder="Access Token">
-        </div>
-        <div class="text-center mt-5">
-          <button class="btn btn-primary px-5" (click)="saveCredentials()">Save Token</button>
+          <div>
+            <input type="text" [(ngModel)]="clientId" placeholder="Client ID" class="form-control mb-3" />
+            <input type="password" [(ngModel)]="clientSecret" placeholder="Client Secret" class="form-control mb-3" />
+            <div class="text-center mt-5">
+              <button class="btn btn-primary px-5" (click)="checkCredentialsAvailability()">Get Token</button>
+            </div>
+          </div>
         </div>
       </div>
       <div *ngIf="authentication" class="d-flex flex-column justify-content-center w-100 h-100">

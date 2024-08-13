@@ -35,45 +35,18 @@ The **Allhours REST API Project** is an application designed to interact with th
 The application will be available at http://localhost:4200/.
 
 
-## How to Obtain a Token Using Postman
+## How to Authenticate Using Client ID and Secret
 
-    Follow these steps to obtain an access token using Postman:
+    To authenticate with the Allhours API, you will need your client_id and client_secret. These credentials will allow you to securely access the API and perform operations such as managing users and absences.
 
-1. **Create a New Request**
+1. **Provide your credentials**
 
-    Open the Postman application.
-    Click the New button, then select Request.
+    When prompted, enter your client_id and client_secret in the application.
 
-2. **Set Up the Request**
+2. **Access the features**
 
-    Name your request (e.g., "Get Token").
-    Create a new collection if needed, then click Save.
+    Once authenticated, you will be able to access user management and absence management features.
 
-3. **HTTP Method and URL**
-
-    Select the POST method.
-    Enter the URL: https://login.allhours.com/connect/token
-
-4. **Configure Headers**
-
-    Click on the Headers tab.
-    Add a new header:
-    - Key: Content-Type
-    - Value: application/x-www-form-urlencoded
-
-5. **Configure the Request Body**
-
-    Click on the Body tab.
-    Select x-www-form-urlencoded.
-    - Add three key-value pairs:
-    - Key: grant_type, Value: client_credentials
-    - Key: client_id, Value: (your client ID)
-    - Key: client_secret, Value: (your client secret)
-
-6. **Send the Request**
-
-    Click the Send button.
-    In the response, you'll receive an access_token, which you can use in subsequent API calls by including it in the Authorization header in the format: Bearer <access_token>.
 
 ## Project Structure
 

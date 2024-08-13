@@ -1,11 +1,8 @@
 {
-    "/api": {
-      "target": "https://login.allhours.com",
-      "secure": false,
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/api": ""
-      }
-    }
+  "/connect/token": {
+    "target": "https://login.allhours.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
-  
+}
